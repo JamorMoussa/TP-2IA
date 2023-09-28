@@ -12,11 +12,11 @@ public class HorlogeThreadInterface implements Runnable{
 	@Override
 	public void run() {
 		
-		hg.timer = new Timer(1000, e -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            hg.horlogeLabel.setText(sdf.format(new Date()));
-        });
+	    hg.timer = new Timer(1000, e -> {
+            	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            	hg.horlogeLabel.setText(sdf.format(new Date()));
+            });
 		
-		hg.timer.start();
+	    hg.timer.start();
 	}
 }

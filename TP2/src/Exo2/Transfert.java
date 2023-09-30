@@ -1,23 +1,23 @@
 package Exo2;
 
-import java.util.Random;
 
 public class Transfert implements Runnable{
 	
 	public Banque banque;
-	public int to;
+	private int to, from;
 	public double montant; 
 	
 
-	public Transfert(Banque banque, int to) {
+	public Transfert(Banque banque, int from, int to) {
 		this.banque = banque;
 		this.to = to;
+		this.from = from;
 	}
 
 	@Override
 	public void run() {
 			
-		banque.transfer(to, 100);
+		banque.transfer(from, to, 100);
 	}
 
 }

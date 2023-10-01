@@ -7,9 +7,9 @@ public class main {
 		JobTotoEtTiti jobinterface = new JobTotoEtTiti();
 		
 		
-		Thread toto = new Thread(jobinterface);
+		Thread toto = new Thread(jobinterface, "Toto");
 		
-		Thread titi = new Thread(jobinterface);
+		Thread titi = new Thread(jobinterface, "Titi");
 		
 		toto.start();
 		titi.start();

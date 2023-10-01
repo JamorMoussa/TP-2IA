@@ -1,16 +1,15 @@
 package Exo3;
-
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Producer implements Runnable{
+public class Consumer implements Runnable{
 	
 	private File<Integer> file;
 	private ReentrantLock lock;
 	private Condition consumerCondition;
 	private Condition producerCondition;
 	
-	public Producer(
+	public Consumer(
 			File<Integer> file,
 			ReentrantLock lock , 
 			Condition consumerCondition ,
@@ -26,23 +25,23 @@ public class Producer implements Runnable{
 	public void run() {
 		
 		for(int i=0; i<10;i++)
-			produce(i);
+			consume();
 		
 	}	
 	
-	private void produce(int data) {
+	private void consume() {
 		lock.lock();
 		
 		try {
-			while(file.isFull()) {
-				System.out.println("file is Full, Producer is waiting...");
-				consumerCondition.signal();
-				producerCondition.await();
+			while(file.isEmpty()) {
+				System.out.println("file is Empty, Consumer is waiting...");
+				producerCondition.signal();
+				consumerCondition.await();
 			}
 			
-			file.offer(data);
-			System.out.println("Prduced : " + data);
-			consumerCondition.signal();
+			int data = file.poll();
+			System.out.println("Consumed : " + data);
+			producerCondition.signal();
 			
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
@@ -51,18 +50,6 @@ public class Producer implements Runnable{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

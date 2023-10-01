@@ -3,7 +3,7 @@ package Exo3;
 
 public class File<T> implements FileInterface<T>{
 	
-	public FileElement<T> head = new FileElement<T>();
+	private FileElement<T> head = new FileElement<T>();
 	private FileElement<T> back = new FileElement<T>();
 	private int size = 0;
 	private int maxCapacity = 0;

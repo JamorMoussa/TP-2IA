@@ -17,6 +17,7 @@ def Adaline(w0, X , y, eps = 1e-8):
     t = 0
     w = np.copy(w0)
     loss = MSE(w, X, y)
+    loss_hist = [loss]
 
     g = Gradient(w, X, y)
 
@@ -24,15 +25,17 @@ def Adaline(w0, X , y, eps = 1e-8):
         for i, xi in enumerate(X):
             ei =  y[i] - hs(w, xi)
             w += 2*ei*xi
-            t += 1
+        t += 1
         loss = MSE(w, X, y)
         g = Gradient(w, X, y)
-    return w, loss, g, t
+        loss_hist.append(loss)
+    
+    return w, loss, loss_hist ,g, t
 
 
 if __name__ == "__main__":
    import data, plot
-   np.random.seed(2)
+   np.random.seed(3)
 
    X_train, y_train = data.data_gener(
        n_samples=120, 
@@ -42,7 +45,7 @@ if __name__ == "__main__":
 
    w0 = np.random.random(X_train.shape[1])
 
-   w_adaline, loss,g, t = Adaline(
+   w_adaline, loss, loss_hist, g, t = Adaline(
        w0 = w0, 
        X= X_train, 
        y= y_train,
@@ -56,4 +59,13 @@ if __name__ == "__main__":
    print("# number of iteration : ", t)
    print("#"*70)
 
-   plot.plot_2D(w_adaline, X_train, y_train, label="Adaline")
+   #plot.plot_2D(w_adaline, X_train, y_train, label="Adaline")
+
+   plot.plot_2D(
+        w=w_adaline,
+        X=X_train, 
+        y=y_train, 
+        label="adaline", 
+        loss_hist=loss_hist,
+        iters = t
+    )
